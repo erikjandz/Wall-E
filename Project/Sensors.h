@@ -10,7 +10,6 @@ sensor_light_t      SENSOR_LIGHT;
 int RED, GREEN, BLUE;
 int DISTANCE;
 int LIGHT;
-int lane = 0;
 
 // Sensors setup
 void initializeSensors(BrickPi3 & BP)
@@ -44,7 +43,7 @@ void updateSensors(BrickPi3 & BP)
 		LIGHT = SENSOR_LIGHT.reflected;
 		//std::cout << "Light: " << LIGHT << std::endl;
 	}
-	std::cout << "\r" << "Colour: " << RED << " " << GREEN << " " << BLUE << "   " << "Distance: " << DISTANCE << "    " <<  "Light: " << LIGHT;
+	//std::cout << "\r" << "Colour: " << RED << " " << GREEN << " " << BLUE << "   " << "Distance: " << DISTANCE << "    " <<  "Light: " << LIGHT;
 }
 
 void freeMode(BrickPi3 & BP)
@@ -106,14 +105,14 @@ void moveForward(BrickPi3 & BP, int & degrees)
 
 void turnRight(BrickPi3 & BP)
 {
-	BP.set_motor_position_relative(PORT_B, -600);
-	BP.set_motor_position_relative(PORT_C, 600);
+	BP.set_motor_position_relative(PORT_B, -560);
+	BP.set_motor_position_relative(PORT_C, 560);
 }
 
 void turnLeft(BrickPi3 & BP)
 {
-	BP.set_motor_position_relative(PORT_B, 600);
-	BP.set_motor_position_relative(PORT_C, -600);
+	BP.set_motor_position_relative(PORT_B, 560);
+	BP.set_motor_position_relative(PORT_C, -560);
 }
 
 void turnRound(BrickPi3 & BP)
@@ -174,22 +173,37 @@ void patrol(BrickPi3 & BP)
 	BP.set_motor_power(PORT_B, speed);
 }
 
-void edge(BrickPi3 & BP)
+int edge(BrickPi3 & BP, int lane)
 {
 	int degrees = 600;
-	if(LIGHT > 2000 & lane % 2 == 0)
+	if(LIGHT > 2000 && lane % 2 == 0)
 	{
 		stopMoving(BP);
+		sleep(2);
 		turnRight(BP);
+		sleep(2);
 		moveForward(BP, degrees);
+		sleep(2);
 		turnRight(BP);
+		sleep(2);
+		//secondTime = true;
+		return 1;
 	}
 	else if(LIGHT > 2000)
 	{
 		stopMoving(BP);
+		sleep(2);
 		turnLeft(BP);
+		sleep(2);
 		moveForward(BP, degrees);
+		sleep(2);
 		turnLeft(BP);
+		sleep(2);
+		return 1;
+	}
+	else
+	{
+		return 0;
 	}
 }
 
