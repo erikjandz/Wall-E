@@ -167,7 +167,7 @@ void followLine(BrickPi3 & BP)
 	}
 }
 
-void patrol(BrickPi3 & BP);
+void patrol(BrickPi3 & BP)
 {
 	int speed = 25;
 	BP.set_motor_power(PORT_C, speed);
@@ -176,18 +176,19 @@ void patrol(BrickPi3 & BP);
 
 void edge(BrickPi3 & BP)
 {
+	int degrees = 600;
 	if(LIGHT > 2000 & lane % 2 == 0)
 	{
 		stopMoving(BP);
 		turnRight(BP);
-		moveForward(BP, 600);
+		moveForward(BP, degrees);
 		turnRight(BP);
 	}
 	else if(LIGHT > 2000)
 	{
 		stopMoving(BP);
 		turnLeft(BP);
-		moveForward(BP, 600);
+		moveForward(BP, degrees);
 		turnLeft(BP);
 	}
 }
