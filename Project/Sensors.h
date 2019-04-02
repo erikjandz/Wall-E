@@ -178,17 +178,17 @@ void edge(BrickPi3 & BP)
 {
 	if(LIGHT > 2000 & lane % 2 == 0)
 	{
-		stopMoving();
-		turnRight();
-		moveForward(600);
-		turnRight();
+		stopMoving(BP);
+		turnRight(BP);
+		moveForward(BP, 600);
+		turnRight(BP);
 	}
 	else if(LIGHT > 2000)
 	{
-		stopMoving();
-		turnLeft();
-		moveForward(600);
-		turnLeft();
+		stopMoving(BP);
+		turnLeft(BP);
+		moveForward(BP, 600);
+		turnLeft(BP);
 	}
 }
 
