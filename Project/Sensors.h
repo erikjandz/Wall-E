@@ -98,31 +98,31 @@ void avoid(BrickPi3 & BP)
 
 // Movement functions
 
-void moveForward(int & degrees)
+void moveForward(BrickPi3 & BP, int & degrees)
 {
 	BP.set_motor_position_relative(PORT_B, degrees);
 	BP.set_motor_position_relative(PORT_C, degrees);
 }
 
-void turnRight()
+void turnRight(BrickPi3 & BP)
 {
 	BP.set_motor_position_relative(PORT_B, -600);
 	BP.set_motor_position_relative(PORT_C, 600);
 }
 
-void turnLeft()
+void turnLeft(BrickPi3 & BP)
 {
 	BP.set_motor_position_relative(PORT_B, 600);
-	BP.set_motor_position_relative(PORTC, -600);
+	BP.set_motor_position_relative(PORT_C, -600);
 }
 
-void turnRound()
+void turnRound(BrickPi3 & BP)
 {
 	BP.set_motor_position_relative(PORT_B, 1200);
 	BP.set_motor_position_relative(PORT_C, -1200);
 }
 
-void stopMoving()
+void stopMoving(BrickPi3 & BP)
 {
 	BP.set_motor_power(PORT_B, 0);
 	BP.set_motor_power(PORT_C, 0);
