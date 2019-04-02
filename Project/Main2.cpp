@@ -38,8 +38,9 @@ void invokeMainloop()
 		else // Vrije modus
 		{
 			
-			followLine(BP);
-			avoid(BP);
+			patrol(BP);
+			edge(BP);
+			//balldetection(BP);
 		}
 	}
 }

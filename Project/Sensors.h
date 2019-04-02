@@ -10,6 +10,7 @@ sensor_light_t      SENSOR_LIGHT;
 int RED, GREEN, BLUE;
 int DISTANCE;
 int LIGHT;
+int lane = 0;
 
 // Sensors setup
 void initializeSensors(BrickPi3 & BP)
@@ -95,6 +96,39 @@ void avoid(BrickPi3 & BP)
 	}
 }
 
+// Movement functions
+
+void moveForward(int & degrees)
+{
+	BP.set_motor_position_relative(PORT_B, degrees);
+	BP.set_motor_position_relative(PORT_C, degrees);
+}
+
+void turnRight()
+{
+	BP.set_motor_position_relative(PORT_B, -600);
+	BP.set_motor_position_relative(PORT_C, 600);
+}
+
+void turnLeft()
+{
+	BP.set_motor_position_relative(PORT_B, 600);
+	BP.set_motor_position_relative(PORTC, -600);
+}
+
+void turnRound()
+{
+	BP.set_motor_position_relative(PORT_B, 1200);
+	BP.set_motor_position_relative(PORT_C, -1200);
+}
+
+void stopMoving()
+{
+	BP.set_motor_power(PORT_B, 0);
+	BP.set_motor_power(PORT_C, 0);
+}
+
+
 // Sensors using
 void followLine(BrickPi3 & BP)
 {
@@ -132,3 +166,30 @@ void followLine(BrickPi3 & BP)
 		BP.set_motor_power(PORT_B, rightMotorSpeed);
 	}
 }
+
+void patrol(BrickPi3 & BP);
+{
+	int speed = 25;
+	BP.set_motor_power(PORT_C, speed);
+	BP.set_motor_power(PORT_B, speed);
+}
+
+void edge(BrickPi3 & BP)
+{
+	if(LIGHT > 2000 & lane % 2 == 0)
+	{
+		stopMoving();
+		turnRight();
+		moveForward(600);
+		turnRight();
+	}
+	else if(LIGHT > 2000)
+	{
+		stopMoving();
+		turnLeft();
+		moveForward(600);
+		turnLeft();
+	}
+}
+
+
